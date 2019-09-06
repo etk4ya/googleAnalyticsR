@@ -347,6 +347,12 @@ google_analytics <- function(viewId,
   }
   
   if(!is.null(dim_filters)){
+    # similar issue to 253
+    # make sure its a list of .filter_clauses_ga4 objects
+    if(class(dim_filters) == "list" &&
+       all(unlist(lapply(dim_filters, function(x) inherits(x, ".filter_clauses_ga4"))))){
+      class(dim_filters) <- ".filter_clauses_ga4"
+    }
     dim_filters <- as(dim_filters, ".filter_clauses_ga4")
   }
   
